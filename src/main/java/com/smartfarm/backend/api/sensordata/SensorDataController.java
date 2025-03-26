@@ -17,12 +17,19 @@ public class SensorDataController {
         this.sensorDataService = sensorDataService;
     }
 
+    // 데이터 전체 조회
     @GetMapping
     public ResponseEntity<List<SensorDataResponse>> getAllSensorData() {
         List<SensorDataResponse> responseList = sensorDataService.getAllSensorData();
         return ResponseEntity.ok(responseList);
     }
 
+    // 가장 최근 센서 데이터만 조회
+    @GetMapping("/latest")
+    public ResponseEntity<SensorDataResponse> getLatestSensorData() {
+        SensorDataResponse latest = sensorDataService.getLatestSensorData();
+        return ResponseEntity.ok(latest);
+    }
 
     @PostMapping
     public ResponseEntity<SensorDataResponse> saveSensorData(@RequestBody SensorDataRequest request) {

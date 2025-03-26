@@ -52,4 +52,18 @@ public class SensorDataService {
                 .build())
             .collect(Collectors.toList());
     }
+
+    public SensorDataResponse getLatestSensorData() {
+        SensorData latest = sensorDataRepository.findTopByOrderByTimestampDesc()
+            .orElseThrow(() -> new IllegalStateException("센서 데이터가 없습니다."));
+
+        return SensorDataResponse.builder()
+            .id(latest.getId())
+            .temperature(latest.getTemperature())
+            .humidity(latest.getHumidity())
+            .light(latest.getLight())
+            .soilMoisture(latest.getSoilMoisture())
+            .timestamp(latest.getTimestamp())
+            .build();
+    }
 }

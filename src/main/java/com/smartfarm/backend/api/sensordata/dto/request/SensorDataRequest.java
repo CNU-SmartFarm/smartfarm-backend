@@ -16,4 +16,10 @@ public class SensorDataRequest {
     public double getSoilMoisture() {
         return soil_moisture;
     }
+
+    // 테스트용 setter
+//    public void setTemperature(double temperature) { this.temperature = temperature; }
+//    public void setHumidity(double humidity) { this.humidity = humidity; }
+//    public void setLight_level(double light_level) { this.light_level = light_level; }
+//    public void setSoil_moisture(double soil_moisture) { this.soil_moisture = soil_moisture; }
 }
