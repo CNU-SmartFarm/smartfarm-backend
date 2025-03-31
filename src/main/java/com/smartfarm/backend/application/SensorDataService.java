@@ -21,6 +21,7 @@ public class SensorDataService {
 
     public SensorDataResponse saveSensorData(SensorDataRequest request) {
         SensorData sensorData = new SensorData(
+            request.getDeviceId(),
             request.getTemperature(),
             request.getHumidity(),
             request.getLight(),
@@ -32,6 +33,7 @@ public class SensorDataService {
 
         return SensorDataResponse.builder()
             .id(saved.getId())
+            .deviceId(saved.getDeviceId())
             .temperature(saved.getTemperature())
             .humidity(saved.getHumidity())
             .light(saved.getLight())
@@ -44,6 +46,7 @@ public class SensorDataService {
         return sensorDataRepository.findAll().stream()
             .map(sensorData -> SensorDataResponse.builder()
                 .id(sensorData.getId())
+                .deviceId(sensorData.getDeviceId())
                 .temperature(sensorData.getTemperature())
                 .humidity(sensorData.getHumidity())
                 .light(sensorData.getLight())
@@ -59,6 +62,7 @@ public class SensorDataService {
 
         return SensorDataResponse.builder()
             .id(latest.getId())
+            .deviceId(latest.getDeviceId())
             .temperature(latest.getTemperature())
             .humidity(latest.getHumidity())
             .light(latest.getLight())

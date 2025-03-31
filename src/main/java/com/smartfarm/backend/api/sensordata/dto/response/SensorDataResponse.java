@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 public class SensorDataResponse {
     private String id;
+    private String deviceId;
     private double temperature;
     private double humidity;
     private double light;
