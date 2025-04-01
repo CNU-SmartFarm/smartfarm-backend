@@ -5,6 +5,7 @@ import com.smartfarm.backend.api.sensordata.dto.response.SensorDataResponse;
 import com.smartfarm.backend.domain.sensordata.SensorData;
 import com.smartfarm.backend.domain.sensordata.SensorDataRepository;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
@@ -44,30 +45,31 @@ public class SensorDataService {
 
     public List<SensorDataResponse> getAllSensorData() {
         return sensorDataRepository.findAll().stream()
-            .map(sensorData -> SensorDataResponse.builder()
-                .id(sensorData.getId())
-                .deviceId(sensorData.getDeviceId())
-                .temperature(sensorData.getTemperature())
-                .humidity(sensorData.getHumidity())
-                .light(sensorData.getLight())
-                .soilMoisture(sensorData.getSoilMoisture())
-                .timestamp(sensorData.getTimestamp())
-                .build())
+            .map(SensorDataResponse::from)
             .collect(Collectors.toList());
     }
 
     public SensorDataResponse getLatestSensorData() {
         SensorData latest = sensorDataRepository.findTopByOrderByTimestampDesc()
             .orElseThrow(() -> new IllegalStateException("센서 데이터가 없습니다."));
+        return SensorDataResponse.from(latest);
+    }
 
-        return SensorDataResponse.builder()
-            .id(latest.getId())
-            .deviceId(latest.getDeviceId())
-            .temperature(latest.getTemperature())
-            .humidity(latest.getHumidity())
-            .light(latest.getLight())
-            .soilMoisture(latest.getSoilMoisture())
-            .timestamp(latest.getTimestamp())
-            .build();
+    public List<SensorDataResponse> getSensorDataByDeviceId(String deviceId) {
+        List<SensorData> dataList = sensorDataRepository.findByDeviceId(deviceId);
+
+        if (dataList.isEmpty()) {
+            throw new NoSuchElementException("해당 디바이스의 데이터가 없습니다: " + deviceId);
+        }
+
+        return dataList.stream()
+            .map(SensorDataResponse::from)
+            .collect(Collectors.toList());
+    }
+
+    public SensorDataResponse getLatestSensorDataByDeviceId(String deviceId) {
+        return sensorDataRepository.findTopByDeviceIdOrderByTimestampDesc(deviceId)
+            .map(SensorDataResponse::from)
+            .orElseThrow(() -> new NoSuchElementException("해당 디바이스의 최신 데이터가 없습니다: " + deviceId));
     }
 }

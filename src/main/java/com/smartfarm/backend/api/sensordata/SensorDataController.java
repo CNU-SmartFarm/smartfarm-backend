@@ -36,4 +36,17 @@ public class SensorDataController {
         SensorDataResponse response = sensorDataService.saveSensorData(request);
         return ResponseEntity.ok(response);
     }
+
+    // deviceId로 해당 센서 모든 데이터 조회
+    @GetMapping("/by-device")
+    public ResponseEntity<List<SensorDataResponse>> getDataByDeviceId(@RequestParam String deviceId) {
+        return ResponseEntity.ok(sensorDataService.getSensorDataByDeviceId(deviceId));
+    }
+
+    // deviceId로 해당 센서 가장 최근 데이터 조회
+    @GetMapping("/latest-by-device")
+    public ResponseEntity<SensorDataResponse> getLatestDataByDeviceId(@RequestParam String deviceId) {
+        return ResponseEntity.ok(sensorDataService.getLatestSensorDataByDeviceId(deviceId));
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.smartfarm.backend.api.sensordata.dto.response;
 
+import com.smartfarm.backend.domain.sensordata.SensorData;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,4 +16,16 @@ public class SensorDataResponse {
     private double light;
     private double soilMoisture;
     private LocalDateTime timestamp;
+
+    public static SensorDataResponse from(SensorData data) {
+        return SensorDataResponse.builder()
+            .id(data.getId())
+            .deviceId(data.getDeviceId())
+            .temperature(data.getTemperature())
+            .humidity(data.getHumidity())
+            .light(data.getLight())
+            .soilMoisture(data.getSoilMoisture())
+            .timestamp(data.getTimestamp())
+            .build();
+    }
 }
