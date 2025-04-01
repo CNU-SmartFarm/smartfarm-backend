@@ -13,13 +13,15 @@ public class SensorData {
     @Id
     private String id;
 
+    private String deviceId;
     private double temperature;
     private double humidity;
     private double light;
     private double soilMoisture;
     private LocalDateTime timestamp;
 
-    public SensorData(double temperature, double humidity, double light, double soilMoisture, LocalDateTime timestamp) {
+    public SensorData(String deviceId, double temperature, double humidity, double light, double soilMoisture, LocalDateTime timestamp) {
+        this.deviceId = deviceId;
         this.temperature = temperature;
         this.humidity = humidity;
         this.light = light;

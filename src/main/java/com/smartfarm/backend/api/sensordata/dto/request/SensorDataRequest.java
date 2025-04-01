@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class SensorDataRequest {
+    private String deviceId;
     private double temperature;
     private double humidity;
     private double light_level;     // 아두이노에서 오는 JSON에 맞춰서 snake_case 사용
