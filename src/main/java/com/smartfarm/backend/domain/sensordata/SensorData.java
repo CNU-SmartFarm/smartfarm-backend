@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 @Getter
-@Document(collection = "sensor_data")
+@Document(collection = "sensor_data") 
 public class SensorData {
 
     @Id
